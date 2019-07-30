@@ -16,13 +16,14 @@
  * - 1 种复杂数据类型: Object
  */
 
- 
+
 /**
  * 2.1.2 TypeScript 的基本数据类型
  *
  */
 // 模板字符串: 由 反引号（``）包围，使用 `$` 向子句中插入表达式。
 let name01: string = `xiaoming`;
+let name_2: string = 'Wang';
 let age: number = 37;
 let sentence: string = `Hello, my name is ${name01}.
     I'll be ${30 +1} years old next month.`;
