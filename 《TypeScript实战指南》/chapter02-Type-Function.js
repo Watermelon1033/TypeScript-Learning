@@ -19,5 +19,9 @@
  */
 // 模板字符串: 由 反引号（``）包围，使用 `$` 向子句中插入表达式。
 var name01 = "xiaoming";
+var name_2 = "WANG";
 var age = 37;
-var sentence = "Hello, my name is " + name01 + ".\n    I'll be " + (30 + 1) + " years old next month";
+var sentence = "Hello, my name is " + name_2 + ".\n    I'll be " + (30 + 1) + " years old next month";
+
+
+修改下文件，制造个冲突，然后使用 vscode 决绝冲突
