@@ -1,4 +1,4 @@
-# TypeScript 官网文档目录
+# TypeScript 官网文档
 > TypeScript 并不是一个完全新的语言，它是 JavaScript 的超集，为 JavaScript 的生态增加了
   类型机制(类型注解)，并最终将代码编译为纯粹的 js 代码。
 
