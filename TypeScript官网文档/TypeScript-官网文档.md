@@ -33,7 +33,7 @@
 
         // Error, 布尔不是 (string | number) 类型
         // x[6] = true;
-        ```
+      ```
 1. 枚举 Enumerable
     - enum 类型是对 Javascript 标准数据类型的一个补充。像 C# 等其它语言一样，使用枚举
         类型可以为一组数值赋予友好的名字。
@@ -51,21 +51,21 @@
     - ```typescript
         enum Color {Red = 1, Green = 2, Blue = 4}
         let c: Color = Color.Green;
-        ```  
+      ```  
     - 枚举类型提供的一个便利是你可以由枚举的值得到它的名字。例如，我们知道数值为 2，但是
         不确定它映射到 Color 里的哪个名字，我肯可以查找相应的名字：
     - ```typescript
-        enum Color {Red = 1, Green, Blue};
+        enum Color {Red = 1, Green, Blue}
         let colorName: string = Color[2];
         console.log(colorName); // Green
-        ```  
+      ```  
 1. Any
     - 对于不确定的数据类型我们可以使用 any 类型来标记
     - ```typescript
         let notSure: any = 4;
         notSure = 'maybe a string instead';
         notSure = false;    // okay, definitely a boolean
-        ```
+      ```
     - 在对代码进行改写的时候，any 类型是十分有用的，它允许你在编译时可选地包含或移除
         类型检查。你可以能认为 Object 有相似的作用，就像它在其他语言中那样。但是 Object
         类型的变量只允许你给它赋任意值——但是却不能在它上面调用任意的方法，即便它真的有这些
@@ -76,14 +76,14 @@
         notSure.toFixed();  // okay, toFixed exists (but the compiler doesn't check)
 
         let prettySure: Object = 4;
-        prettySure.toFixed();   // Error: Property 'toFixed' doesn't exist on type 'Object'.
-        ```
+        // prettySure.toFixed();   // Error: Property 'toFixed' doesn't exist on type 'Object'.
+      ```
     - 当你只知道一部分数据的类型时，any 类型也是有用的。比如你有一个数组，它包含上了不同
         类型的数据:
     - ```typescript
         let list: any[] = [1, true, 'free'];
         list[1] = 100;
-        ```  
+      ```  
 1. Unknow 类型
     - 任何使用 any 类型的地方推荐使用 unknow 类型代替它。
     - > [new-unknow-top-type](https://www.typescriptlang.org/docs/handbook/
@@ -97,7 +97,7 @@
         function warnUser(): void {
             console.log('This is my warning message');
         }
-        ```
+      ```
     - 声明一个 void 类型的变量没有什么大用，因为你只能为它赋予 undefined 和 null;  
     - ```typescript
         let unusable: void = undefined; 
@@ -109,7 +109,7 @@
         // Not much else we can assign to these variables!
         let u: undefined = undefined;
         let u: null = null;
-        ```  
+      ```  
     - 默认情况下，null 和 undefined 是所有类型的子类型，就是说你可以把 null 和 
         undefined 赋值给 number 类型的变量.  (Tip: 是所有类型的子类型，那也就是说
         可以赋值给其他类型，比如 string/boolean...等等) 
@@ -141,7 +141,7 @@
         function infiniteLoop(): never {
             while(true) {}
         }
-        ```  
+      ```  
 1. Object
     - 和 JavaScript 中的语法一样， Object 为复杂数据类型 (引用类型)，即除 6 种基本
         数据类型外的类型。 下面为 6 种基本数据类型:  
@@ -158,11 +158,11 @@
         declare function create(o: object | null): void;
         create({prop: 0});  // OK
         create(null);   // OK
-        create(42);     // Error
-        create('string');   // Error
-        create('false');   // Error
-        create('undefined');   // Error
-        ```  
+        // create(42);     // Error
+        // create('string');   // Error
+        // create('false');   // Error
+        // create('undefined');   // Error
+      ```  
 1. 类型断言
     - 通过类型断言你可以告诉编辑器，"相信我，我知道自己在干什么"。类型断言好比其他语言里
         的类型转换，但是不进行特殊的数据检查和解构。它没有运行时的影响，只是在编译阶段起
@@ -175,7 +175,7 @@
         
         // - 第 2 种形式: as 语法。
         let strLength02: number = (someValue as string).length;
-        ```  
+      ```  
     - 上面 2 种形式是等价的，选择由你所好；然而，当你在 TypeScript 里使用 JSX 时，只
         有 as 语法是被允许的。
 1. 关于 let 
@@ -215,6 +215,9 @@
         interface SquareConfig {
             color?: string;
             width?: number;
+        }
+        function createSquare(config: SquareConfig): {color: string; area: number} {
+          let newSquare 
         }
       ```  
 - 只读属性
