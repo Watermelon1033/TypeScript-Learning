@@ -1,5 +1,6 @@
 # TypeScript 基础篇
-- [文章来源](https://github.com/MuYunyun/blog/blob/master/BasicSkill/typescript/TypeScript%E5%9F%BA%E7%A1%80%E7%AF%87.md)
+- [文章来源](https://github.com/MuYunyun/blog/blob/master/BasicSkill/typescript/
+TypeScript%E5%9F%BA%E7%A1%80%E7%AF%87.md)
 - 《TypeScript 实战指南》笔记
 
 ## 数据类型
