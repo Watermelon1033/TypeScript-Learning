@@ -181,17 +181,17 @@
 1. 关于 let 
     - 尽可能地使用 let 来代替 var 吧。  
 
-##  2. 变量声明 Variable Declarations**  
+##  2. 变量声明 Variable Declarations
 - 略
 
-##  3. 接口 Interfaces**
+##  3. 接口 Interfaces
 - > Typescript 的核心原则之一是**对值所具有的的结构进行类型检查。**, 它有时被称为 
   "鸭式变型法" 或 "结构性子类型化"。在 TypeScript 里，
   **接口的作用就是: 为这些类型命名和为你的代码或第 3 方代码定义契约。**
 - 接口初探
     + ```typescript
-        // - Tip: 花括号里的 label: string; 看起来像是键值对，但根据 TypeScript
-        //   的语法来讲，string 只是 label 的
+        // - Tip: 花括号里的 label: string; string 只是 label 属性的注解，
+        //   并不是键值对。
         interface LabelledValue {
             label: string;
         }
@@ -213,8 +213,8 @@
       赋值了。下面是应用了 "option bags" 的例子:
     + ```typescript
         interface SquareConfig {
-            color?: string
-            width?: number
+            color?: string;
+            width?: number;
         }
       ```  
 - 只读属性
