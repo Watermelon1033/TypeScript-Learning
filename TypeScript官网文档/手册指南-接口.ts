@@ -49,3 +49,31 @@ console.log(mySquare);
 // - *(PS: 划重点)* 因此，我们应该直接操作类的静态部分。看下面的例子，我们定义了 
 //   2个接口，ClockConstructor 为构造函数所用, ClockInterface 为实例方法所用。
 //   为了方便我们再定义一个构造函数 createClock, 它用传入的类型创建实例。看示例:  
+
+// - ClockConstructor 接口为构造函数所用
+interface ClockConstructor {
+    new (hour: number, minute: number): ClockInterface;
+}
+// - ClockInterface 接口为实例方法所用
+interface ClockInterface {
+    tick();
+}
+function createClock(ctor: ClockConstructor, hour: number, minute: number): 
+    ClockInterface {
+    return new ctor(hour, minute);
+}
+class DigitalClock implements ClockInterface {
+    constructor(h: number, m:number) {}
+    tick() {
+        console.log('beep beep');
+    }
+}
+// - analog ['ænəlɒɡ] --adj.模拟的，类比的。 --n.类比
+class AnalogClock implements ClockInterface {
+    construct(h: number, m: number) {}
+    tick() {
+        console.log('tick tock');
+    }
+}
+let digital = createClock(DigitalClock, 12, 17);
+let analog = createClock(AnalogClock, 7, 32);

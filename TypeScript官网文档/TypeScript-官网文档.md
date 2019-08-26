@@ -356,9 +356,8 @@
         let myArray: ReadonlyStringArray = ["Alice", "Bob"];
         myArray[2] = "Mallory"; // error
       ``` 
-
 - **类类型**
-    + **实现接口 (implementing an interface)**
+    + *实现接口 (implementing an interface)*
         + implement ['ɪmplɪm(ə)nt]  --vt.实现，执行. --n.工具，设备
         + 与 C# 或 Java 里接口的基本作用一样，TypeScript 也能够用它来明确的强制一个类去
           符合某种契约。
@@ -388,7 +387,7 @@
           ```
         + 接口描述了类的公共部分，而不是公共和私有 2 部分。它不会帮你检查类是否具有某些私有
           成员。  
-    + **区分: 类的"静态部分"与"实例部分"的不同**
+    + *区分: 类的"静态部分"与"实例部分"的不同*
       (Difference between the static and instance sides of classes)
         - 当你操作类和接口的时候，你要知道类是具有 2 个类型的: 静态部分的类型 和 实例的类型
           。当你用构造器签名去定义一个接口并试图定义一个类去实现这个接口时会得到一个错误: 
@@ -407,12 +406,100 @@
                 currentTime: Date;
                 constructor(h: number, m: number) {}
             }
-          ```
-          - *(PS: 划重点)* 因此，我们应该直接操作类的静态部分。看下面的例子，我们定义了 
-            2个接口，ClockConstructor 为构造函数所用, ClockInterface 为实例方法所用。
-            为了方便我们再定义一个构造函数 createClock, 它用传入的类型创建实例。看示例:  
+          ```      
+        - *(PS: 划重点)* 因此，我们应该直接操作类的静态部分。看下面的例子，我们定义了 
+          2个接口，ClockConstructor 为构造函数所用, ClockInterface 为实例方法所用。
+          为了方便我们再定义一个构造函数 createClock, 它用传入的类型创建实例。看示例:  
+          ```typescript
+            // - ClockConstructor 接口为构造函数所用
+            interface ClockConstructor {
+                new (hour: number, minute: number): ClockInterface;
+            }
+            // - ClockInterface 接口为实例方法所用
+            interface ClockInterface {
+                tick();
+            }
+            function createClock(ctor: ClockConstructor, hour: number, 
+                minute: number): ClockInterface {
+                return new ctor(hour, minute);
+            }
+            class DigitalClock implements ClockInterface {
+                constructor(h: number, m:number) {}
+                tick() {
+                    console.log('beep beep');
+                }
+            }
+            // - analog ['ænəlɒɡ] --adj.模拟的，类比的。 --n.类比
+            class AnalogClock implements ClockInterface {
+                construct(h: number, m: number) {}
+                tick() {
+                    console.log('tick tock');
+                }
+            }
+            // - 因为 createClock 的第一个参数是 ClockConstructor 类型，在
+            //   createClock(AnalogClock, 7, 32)里，会检查 AnalogClock 是否符合
+            //   构造函数签名。
+            let digital = createClock(DigitalClock, 12, 17);
+            let analog = createClock(AnalogClock, 7, 32); 
+          ```       
 - **继承接口**
+    + 和类一样，接口也可以相互继承。这让我们能够从一个接口里复制成员到另一个接口里，可以更灵活
+      地将接口分割到可重用的模块里。
+      ```typescript
+        interface Shape {
+            color: string;
+        }
+        interface Square extends Shape {
+            sideLength: number;
+        }
+        let square = <Square>{};
+        square.color = 'blue';
+        square.sideLength = 10;
+      ```
+    + 一个接口也可以继承多个接口，创建出多个接口的合成接口。
+      ```typescript
+        interface Shape {
+            color: string;
+        }
+        interface PenStroke {
+            penWidth: number;
+        }
+        interface Square extends Shape, PenStroke {
+            sideLength: number;
+        }
+         let square = <Square>{};
+        square.color = 'blue';
+        square.sideLength = 10;
+        square.penWidth = 5.0;
+      ```  
 - **混合类型**
+    + 接口能描述 js 里丰富的类型。但是因为 js 其动态灵活的特点，有时你也希望一个对象可以同时
+      具有上面提到的多种类型。
+    + 一个例子就是，一个对象可以同时作为函数和对象使用，并带有额外的属性。
+      ```typescript
+        // - Counter 就可以看作是定义的一个函数类型的接口
+        interface Counter {
+            (start: number): string;
+            interval: number;
+            reset(): void;
+        }
+        // - Tip: 这个示例也真是...... 按照上面说 "对象可以同时作为函数和对象使用"，
+        //   倒不如说 counter 就是一个函数，因为函数本身也是对象，所以在函数上定义属性和
+        //   方法本身并没有什么特别的，只是我们在使用 JavaScript 时，一般规定在构造函数
+        //   上才添加属性和方法，但是不要忘记了，没有 js 语法规定不可以在普通函数上定义
+        //   属性和方法。
+        function getCounter(): counter {
+            let counter = <Counter>function (start: number) {};
+            counter.interval = 123;
+            counter.reset = function() {};
+            return counter;
+        }
+        let c = getCounter();
+        c(10);
+        c.reset();
+        c.interval = 5.0;
+      ```
+    + 在使用 JavaScript 第三方库的时候，你可能需要像上面那样去完整地定义类型。  
 - **接口继承类**
 
 ##  4. 类 Classes
