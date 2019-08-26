@@ -284,7 +284,7 @@
         let mySearch: SearchFunc;
         mySearch = function(source: string, subString: string) {
             let result = source.search(subString);
-        }
+        };
 
         // - 对于函数类型的类型检查来说，函数的参数名不需要与接口里定义的名字相匹配。比如，
         //   我们使用下面的代码重写上面的例子:
@@ -292,7 +292,7 @@
         mySearch = function(src: string, sub: string): boolean {
             let result = src.search(sub);
             return result > -1;
-        }
+        };
 
         // - 函数的参数会逐个进行检查，要求对应位置上的参数类型是兼容的。如果不想指定类型，
         //   TypeScript 的类型系统会推断出参数类型，因为函数直接赋值给了 SearchFunc 
@@ -325,7 +325,7 @@
       "100" (一个字符串 string) 区索引，因此 2 者需要保持一致。 
       ```typescript
         class Animal {
-            name； string;
+            name: string;
         }
         class Dog extends Animal {
             breed: string;
