@@ -25,3 +25,27 @@ function createSquare(config:SquareConfig): {color:string; area:number} {
 }
 let mySquare = createSquare({color: 'black'});
 console.log(mySquare);
+
+
+// + **区分: 类的"静态部分"与"实例部分"的不同**
+//   (Difference between the static and instance sides of classes)
+// - 当你操作类和接口的时候，你要知道类是具有 2 个类型的: 静态部分的类型 和 实例的类型
+//   。当你用构造器签名去定义一个接口并试图定义一个类去实现这个接口时会得到一个错误: 
+//   来看下面的示例:
+// - 上面一段的第一句可以用下面这段白话理解: 
+// - (PS: 我们都知道给构造函数添加的方法有原型上的方法(构造函数的实例可以继承，也可称为
+//   实例方法) 和给构造函数本身添加的 "静态方法", 由于 ES6 推出了构造函数的语法糖
+//   即"类"，所以给构造函数本身添加的方法也称为类的静态方法。)
+    interface ClockConstructor {
+        // - Clock 类内部的 constructor 存在于类的静态部分(即: 类的静态方法)，
+        //   所以不在接口的检查范围内。
+        new (hour: number, minute: number);
+    }
+    class Clock implements ClockConstructor {
+        currentTime: Date;
+        constructor(h: number, m: number) {}
+    }
+
+// - *(PS: 划重点)* 因此，我们应该直接操作类的静态部分。看下面的例子，我们定义了 
+//   2个接口，ClockConstructor 为构造函数所用, ClockInterface 为实例方法所用。
+//   为了方便我们再定义一个构造函数 createClock, 它用传入的类型创建实例。看示例:  

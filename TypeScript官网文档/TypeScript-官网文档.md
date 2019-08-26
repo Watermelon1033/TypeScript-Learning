@@ -347,8 +347,70 @@
             // - 错误，`name` 的类型与索引类型返回值的类型不匹配
             name: string;
         }
-      ```   
+      ```
+    + 最后，你可以将**索引签名设置为只读**，这样就防止了给索引赋值:
+      ```typescript
+        interface ReadonlyStringArray {
+            readonly [index: number]: string;
+        }
+        let myArray: ReadonlyStringArray = ["Alice", "Bob"];
+        myArray[2] = "Mallory"; // error
+      ``` 
+
 - **类类型**
+    + **实现接口 (implementing an interface)**
+        + implement ['ɪmplɪm(ə)nt]  --vt.实现，执行. --n.工具，设备
+        + 与 C# 或 Java 里接口的基本作用一样，TypeScript 也能够用它来明确的强制一个类去
+          符合某种契约。
+          ```typescript
+            interface ClockInterface {
+                currentTime: Date;
+            }
+            // - 强制 Clock 类符合 ClockInterface 接口的契约
+            class Clock implements ClockInterface {
+                currentTime: Date;
+                constructor(h: number, m: number) { }
+            }
+          ```
+        + 你也可以在接口中描述一个方法，在类里实现它，如同下面的 setTime 方法一样:
+          ```typescript
+            interface ClockInterface {
+                currentTime: Date;
+                setTime(d: Date);
+            }
+            class Clock implements ClockInterface {
+                currentTime: Date;
+                setTime(d: Date) {
+                    this.currentTime = d;
+                }
+                constructor(h: number, m: number) { }
+            }
+          ```
+        + 接口描述了类的公共部分，而不是公共和私有 2 部分。它不会帮你检查类是否具有某些私有
+          成员。  
+    + **区分: 类的"静态部分"与"实例部分"的不同**
+      (Difference between the static and instance sides of classes)
+        - 当你操作类和接口的时候，你要知道类是具有 2 个类型的: 静态部分的类型 和 实例的类型
+          。当你用构造器签名去定义一个接口并试图定义一个类去实现这个接口时会得到一个错误: 
+          来看下面的示例:
+        - 上面一段的第一句可以用下面这段白话理解: 
+        - (PS: 我们都知道给构造函数添加的方法有原型上的方法(构造函数的实例可以继承，也可称为
+          实例方法) 和给构造函数本身添加的 "静态方法", 由于 ES6 推出了构造函数的语法糖
+          即"类"，所以给构造函数本身添加的方法也称为类的静态方法。)
+          ```typescript
+            interface ClockConstructor {
+                // - Clock 类内部的 constructor 存在于类的静态部分(即: 类的静态方法)，
+                //   所以不在接口的检查范围内。
+                new (hour: number, minute: number);
+            }
+            class Clock implements ClockConstructor {
+                currentTime: Date;
+                constructor(h: number, m: number) {}
+            }
+          ```
+          - *(PS: 划重点)* 因此，我们应该直接操作类的静态部分。看下面的例子，我们定义了 
+            2个接口，ClockConstructor 为构造函数所用, ClockInterface 为实例方法所用。
+            为了方便我们再定义一个构造函数 createClock, 它用传入的类型创建实例。看示例:  
 - **继承接口**
 - **混合类型**
 - **接口继承类**
