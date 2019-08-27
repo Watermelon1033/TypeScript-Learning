@@ -77,3 +77,27 @@ class AnalogClock implements ClockInterface {
 }
 let digital = createClock(DigitalClock, 12, 17);
 let analog = createClock(AnalogClock, 7, 32);
+
+
+
+// - 接口继承类
+(function() {
+    // - (1)
+    class Control {
+        private state: any;
+    }
+    // - (2)
+    interface SelectableControl extends Control {
+        // - 当前接口描述了一个 select() 方法，此方法没有返回值
+        select(): void;
+    }
+    // - (3)
+    class Button extends Control implements SelectableControl {
+        select() {}
+    }
+    // - (4)
+    class TextBox extends Control {
+        select() {}
+    }
+
+})();
