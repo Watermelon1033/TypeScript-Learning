@@ -248,7 +248,7 @@
       ```typescript
         interface Point {
             // - 作为属性则使用 readonly
-            readonly x:; number;
+            readonly x: number;
             readonly y: number;
         }
         let p1: Point = {x: 10, y: 20};
@@ -268,7 +268,7 @@
     + `readonly` vs `const`: 作为变量使用 const, 若作为属性则使用 readonly.
 - **额外的属性检查**
     + 略
-- **函数类型**
+- **函数类型(的接口)**
     + 接口能够描述 JavaScript 中对象拥有的各种各样的外形。除了描述带有属性的普通对象外，接
       口也可以描述函数类型。
     + 为了使用接口表示函数类型，我们需要给接口定义一个调用签名。它就像是一个只有参数列表和
@@ -284,6 +284,7 @@
         let mySearch: SearchFunc;
         mySearch = function(source: string, subString: string) {
             let result = source.search(subString);
+            return result > -1;
         };
 
         // - 对于函数类型的类型检查来说，函数的参数名不需要与接口里定义的名字相匹配。比如，
@@ -332,6 +333,8 @@
         }
         // - 错误: 使用数值型的字符串索引，有时会得到完全不同的 Animal
         interface NotOkay {
+      	    // - 数字索引的返回值必须是字符串索引返回直类型的子类型。因为 Dog 是 Animal
+	        //   类的子类，所以这里是错误的，此处 Animal 和 Dog 互换即可。
             [x: number]: Animal;
             [x: string]: Dog;
         }
