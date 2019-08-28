@@ -252,16 +252,16 @@
             readonly y: number;
         }
         let p1: Point = {x: 10, y: 20};
-        p1.x = 5;   // error 
+        // p1.x = 5;   // error 
       ```
     + TypeScript 具有 `ReadonlyArray<T>` 类型，它与 `Array<T>` 相似，只是把所有可变
       方法去掉了，因此可以确保数组创建后再也不能被修改:
       ```typescript
         let a: number[] = [1, 2, 3, 4];
         let ro: ReadonlyArray<number> = a;
-        ro[0] = 12; // error
-        ro.push(5); // error
-        a = ro; // error
+        // ro[0] = 12; // error
+        // ro.push(5); // error
+        // a = ro; // error
       ```
     + 上面代码的最后一行，可以看到就算把整个 ReadonlyArray 赋值给一个普通数组也是不可的。
       但是可以使用类型断言重写:  ```typescript a = ro as number[]```    
@@ -491,14 +491,14 @@
         //   方法本身并没有什么特别的，只是我们在使用 JavaScript 时，一般规定在构造函数
         //   上才添加属性和方法，但是不要忘记了，没有 js 语法规定不可以在普通函数上定义
         //   属性和方法。
-        function getCounter(): counter {
+        function getCounter(): Counter {
             let counter = <Counter>function (start: number) {};
             counter.interval = 123;
             counter.reset = function() {};
             return counter;
         }
         let c = getCounter();
-        c(10);
+        // c(10);
         c.reset();
         c.interval = 5.0;
       ```
@@ -638,7 +638,7 @@
                     this.name = theName;
                 }
             }
-            new Animal("Cat").name;     // 错误: "name" 是私有的。
+            // new Animal("Cat").name;     // 错误: "name" 是私有的。
         ```
     + 理解 `protected`
 - **`readonly` 修饰符**
