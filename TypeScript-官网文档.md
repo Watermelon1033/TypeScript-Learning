@@ -831,6 +831,64 @@
 
 
 ##  5. 函数 Functions
+1. **函数类型**
+    + 为函数定义类型
+        - 函数声明
+          ```typescript
+            function add(x: number, y: number): number {
+                return x + y;
+            }
+          ```
+        - 函数表达式
+          ```typescript
+            let myAdd = function(x: number, y: number): number {
+                return x + y;
+            }
+          ```
+        - 箭头函数:
+          ```typescript
+            let yourAdd = (x: number, y: number): number => {
+                return x + y;
+            }
+          ```
+    + 书写完整函数类型
+        - 函数类型包含 2 部分: "参数类型" 和 "返回值类型"。当写出完整函数类型的时候，这两
+          部分都是需要的。我们以参数列表的形式写出参数类型，为每个参数指定一个名字和类型。
+          ```typescript
+            // - 注意: myAdd 后是冒号, 也就是说 
+            //   `myAdd: (x: number, y: number) => number` 这是一体的
+            let myAdd: (x: number, y: number) => number = 
+                function(x: number, y: number): number {return x + y;}
+          ```
+        - 这个名字只是为了增加可读性。我们也可以这么写:
+          ```typescript
+            let myAdd: (baseValue: number, increment: number) => number = 
+                function(x: number, y: number): number {return x + y;}
+          ```
+          只要参数类型是匹配的，那么就认为它是有效的函数类型，而不在乎参数名是否正确。
+        - 第二部分是返回值类型，对于返回值，我们在函数和返回值类型之前使用 ( =>) 符号，
+          使之清晰明了。 如之前提到的，返回值类型是函数类型的必要部分，如果函数没有返回
+          任何值，你也必须指定返回值类型为 `void` 而不能留空。
+    + 推断类型
+        - 上面的 "书写完整函数类型" 的注释写起来真是想吐槽，所以我们可以这样，在赋值语句
+          的一边指定类型另一边不指定类型，ts 编译器会自动识别出类型:
+          ```typescript
+            // - myAdd has the full function type
+            let myAdd = function(x:number, y:number): number {return x + y;}
+          ```
+          ```typescript
+            // - 省略右边
+            let myAdd: (baseValue: number, increment: number) => number =  
+                function(x, y) {return x + y;}
+          ```
+        - 这叫做 "按上下文归类"，是类型推论的一种。
+2. **可选参数和默认参数**
+3. **剩余参数**
+4. **this**
+    + this 和 箭头函数
+    + this 参数
+    + this 参数在回调函数里
+5. **重载**    
 
 ##  6. 泛型 Generics
 
