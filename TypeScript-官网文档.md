@@ -401,8 +401,8 @@
           即"类"，所以给构造函数本身添加的方法也称为类的静态方法。)
           ```typescript
             interface ClockConstructor {
-                // - Clock 类内部的 constructor 存在于类的静态部分(即: 类的静态方法)，
-                //   所以不在接口的检查范围内。
+                // - 这里会报错，因为当一个类实现一个接口时，只对其实例部分进行类型检查。
+                //   constructor 存在于类的静态部分，所以不在检查的范围。
                 new (hour: number, minute: number);
             }
             class Clock implements ClockConstructor {
