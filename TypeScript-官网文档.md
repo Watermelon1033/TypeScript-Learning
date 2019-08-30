@@ -776,9 +776,8 @@
           ```
         - 我们来稍微改下一下这个例子，看看别的不同：
           ```typescript
-            // - Tip: 注意 Greeter 类中没有定义 constructor(). 那么定义 Greeter 类
-            //   需要的 constructor() 方法 ts 在哪里定义的呢？ A: 即下面的 
-            //   `let greeterMaker: typeof Greeter = Greeter ` 
+            // - Tip: 注意 Greeter 类中没有定义 constructor(). 个人认为在声明类的
+            //   语法糖中 constructor 可能并不是必须的，
             class Greeter {
                 static standardGreeting = "Hello, there";
                 greeting: string;
@@ -886,7 +885,48 @@
           ```
         - 这叫做 "按上下文归类"，是类型推论的一种。
 2. **可选参数和默认参数**
+    + 可选参数: 在参数名旁使用 ? 实现可选参数的功能：
+      ```typescript
+        function buildName(firstName: string, lastName?: string) {
+            if (lastName)
+                return firstName + " " + lastName;
+            else
+                return firstName;
+        }
+        let result1 = buildName("Bob");  // works correctly now
+        let result2 = buildName("Bob", "Adams", "Sr.");  // error, too many parameters
+        let result3 = buildName("Bob", "Adams");  // ah, just right
+      ```
+    + 默认参数
+      ```typescript
+        function buildName(firstName: string, lastName = "Smith") {
+            return firstName + " " + lastName;
+        }
+        let result1 = buildName("Bob");  // works correctly now, returns "Bob Smith"
+        let result2 = buildName("Bob", undefined);  // still works, also returns "Bob Smith"
+        let result3 = buildName("Bob", "Adams", "Sr.");  // error, too many parameters
+        let result4 = buildName("Bob", "Adams");      // ah, just right
+      ```  
 3. **剩余参数**
+    + ```typescript
+        // - Tip: 这个功能真的不是鸡肋吗？ ...restOfName: string[] 这里给剩余参数
+        //   增加了一个类型注释，即规定剩余参数是一个数组，但数组的每一项值都为 string 值
+        //   ，在 js 这样的动态语言中，值的类型可以多种多样，这样直接限制死了，真的合适吗？
+        function buildName(firstName: string, ...restOfName: string[]) {
+            return firstName + " " + restOfName.join(" ");
+        }
+        let employeeName = buildName("Joseph", "Samuel", "Lucas", "MacKinzie");
+      ```
+    + 剩余参数会被当做个数不限的可选参数。 可以一个都没有，同样也可以有任意个。 编译器创建
+      参数数组，名字是你在省略号（ ...）后面给定的名字，你可以在函数体内使用这个数组。 
+    + 这个省略号也会在带有剩余参数的函数类型定义上使用到：
+      ```typescript
+        function buildName(firstName: string, ...restOfName: string[]) {
+        return firstName + " " + restOfName.join(" ");
+        }
+        let buildNameFun: (fname: string, ...rest: string[]) => 
+            string = buildName;
+      ```
 4. **this**
     + this 和 箭头函数
     + this 参数
