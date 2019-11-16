@@ -6,18 +6,16 @@
 
 ##  1. 基础类型 Basic Types
 1. 布尔值 Boolean
-    
-    + `typescript let isDone: boolean = false;`
+    + `let isDone: boolean = false;`
 1. 数字 Number
-    
-    + `typescript let num: number = 37;`
+    + `let num: number = 37;`
 1. 字符串 String
     
-    + `typescript let name: string = 'Gene';`
+    + `let name: string = 'Gene';`
 1. 数组 Array
     + typescript 有 2 种方式可以定义数组:
-        1. `typescript let list: number[] = [1, 2, 3]; `
-        2. `typescript let list: Array<number> = [1, 2, 3];`
+        1. `let list: number[] = [1, 2, 3]; `
+        2. `let list: Array<number> = [1, 2, 3];`
 1. 元祖 Tuple
     + 元祖类型允许表示一个已知元素数量和类型的数组，各元素的类型不必相同。例如:
     + ```typescript
