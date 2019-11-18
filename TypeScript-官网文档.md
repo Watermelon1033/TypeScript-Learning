@@ -38,24 +38,24 @@
 1. 枚举 Enumerable
     - enum 类型是对 Javascript 标准数据类型的一个补充。像 C# 等其它语言一样，使用枚举
         类型可以为一组数值赋予友好的名字。
-    - ```typescript
+      ```typescript
         enum Color {Red, Green, Blue}
         let c: Color = Color.Green;
-        ```
+      ```
     - 默认情况下，从 0 开始为元素编号。你也可以手动的指定成员的数值。例如，我们将上面的
         例子改成从 1 开始编号:
-    - ```typescript
+      ```typescript
         enum Color {Red = 1, Green, Blue}
         let c: Color = Color.Green;
-        ```
+      ```
     - 或者，全部都采用手动赋值:
-    - ```typescript
+      ```typescript
         enum Color {Red = 1, Green = 2, Blue = 4}
         let c: Color = Color.Green;
       ```
     - 枚举类型提供的一个便利是你可以由枚举的值得到它的名字。例如，我们知道数值为 2，但是
         不确定它映射到 Color 里的哪个名字，我肯可以查找相应的名字：
-    - ```typescript
+      ```typescript
         enum Color {Red = 1, Green, Blue}
         let colorName: string = Color[2];
         console.log(colorName); // Green
