@@ -5,5 +5,5 @@
     let x: [string, number];
     // - Initialize it. 初始化
     x = ['Hello', 10];
-    console.log(x[0].substr(1));
+    console.log(x[0].substr(1));    // ello
 })();
