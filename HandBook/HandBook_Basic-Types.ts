@@ -1,4 +1,5 @@
 enum Color {Red = 1, Green, Blue}
+
 let c: Color = Color.Green;
 console.log(c); // Green
 
@@ -7,5 +8,6 @@ enum ListOfNames {
     John,
     Jane
 }
+
 let Indrek = ListOfNames[0];
-console.log(Indrek);    // Indrek;
+console.log(Indrek);    // Indrek; 

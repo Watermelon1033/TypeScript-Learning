@@ -102,6 +102,7 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
     function identity(arg) {
         return arg;
     }
+
     // - 第 1 种使用“泛型函数”的方法，传入所有的参数，包含类型参数。
     const output = identity("myString");
     // - 第 2 种方法更普遍。利用了 类型推论--即编译器会根据传入的参数自动地帮助我们确定 
@@ -125,9 +126,11 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
         E[E["Y"] = 1] = "Y";
         E[E["Z"] = 2] = "Z";
     })(E || (E = {}));
+
     function f(obj) {
         return obj.X;
     }
+
     console.log("f(E):", f(E)); // f(E): 0
     // - 反向映射: 根据下面生成的 js 代码可以看出， 枚举类型被编译成一个对象，它包含了
     //   正向映射（name -> value）和反向映射（value -> name）。引用枚举成员总会生成为

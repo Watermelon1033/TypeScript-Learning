@@ -25,41 +25,20 @@
  */
 
 // - 类型注解
-function greeter(person: string) {
-    return "Hello, " + person;
-}
-let user = "Jane User";
-console.log(greeter(user)); // Hello, Jane User
+(function () {
+    function greeter(person: string) {
+        return "Hello, " + person;
+    }
 
+    let user = "Jane User";
+    console.log(greeter(user)); // Hello, Jane User
+
+})();
 
 // - 3.接口: 我们使用接口来描述一个拥有 firstName 和 LastName 字段的对象。在 TypeScript
 //   里，只要两个类型内部的结构兼容那么这两个类型就是兼容的。这允许我们在实现接口时候只要保证
 //   了接口要求的结构就可以，不必明确地使用 implements 语句。
-interface Person {
-    firstName: string;
-    lastName: string;
-}
-function greet(person: Person) {
-    return "Hello, " + person.firstName + " " + person.lastName;
-}
-let usr = {
-    firstName: "Jean",
-    lastName: "Valjean"
-};
-console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
-
-
-// - 4.类
-(function() {
-    class Student {
-        fullName: string;
-        // 在构造函数的参数上使用 public 等同于创建了同名的成员变量。
-        constructor(public firstName, public middleInitial, public lastName) {
-            this.fullName = firstName + ' ' + middleInitial + ' ' + lastName;
-        }
-    }
-    
-    // 这个示例不太明白，定义的
+(function () {
     interface Person {
         firstName: string;
         lastName: string;
@@ -68,42 +47,56 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
     function greet(person: Person) {
         return "Hello, " + person.firstName + " " + person.lastName;
     }
-    let usr = new Student("Jean", ".M.", "Valjean");
+
+    let usr = {
+        firstName: "Jean",
+        lastName: "Valjean"
+    };
     console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
-    
+
+
 })();
+
+
+// - 4.类
+
 
 // - 5.函数：函数类型包含 2 个部分： 参数类型和返回值类型。当写出完整函数类型的时候，
 //   这两部分都是需要的。
-(function() {
+(function () {
     // 编译为 js 就是: let myAdd = function(x, y) {return x + y; }
-    let myAdd:(x: number, y: number) => number 
-        = function(x: number, y: number): number {return x + y;}
+    let myAdd: (x: number, y: number) => number
+        = function (x: number, y: number): number {
+        return x + y;
+    };
 
     // - this 参数
     interface Card {
         suit: string;
         card: number;
     }
+
     interface Deck {
         suits: string[];
         cards: number[];
+
         createCardPicker(this: Deck): () => Card;
     }
+
     let deck: Deck = {
         suits: ['hearts', 'spades', 'clubs', 'diamonds'],
         cards: Array(52),
         // NOTE: The function now explicitly specifies that its callee must be
         // of type Deck
-        createCardPicker: function(this: Deck) {
+        createCardPicker: function (this: Deck) {
             return () => {
                 let pickedCard = Math.floor(Math.random() * 52);
                 let pickedSuit = Math.floor(pickedCard / 13);
-                
+
                 return {suit: this.suits[pickedSuit], card: pickedCard % 13};
             }
         }
-    }
+    };
     let cardPicker = deck.createCardPicker();
     let pickedCard = cardPicker();
     console.log("card: " + pickedCard.card + " of " + pickedCard.suit);
@@ -111,13 +104,13 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
 
 
 // - 6.泛型
-(function() {
+(function () {
     // - 可以使用泛型来创建可重用的组件，一个组件可以支持多种类型的数据。这样用户就可以以自己
     //   的数据类型来使用组件。
 
     // - **类型变量**：我们需要一种方法使返回值得类型与传入参数的类型是相同的。这里，我们
     //   使用了 “类型变量”，它是一种特殊的变量，只用于表示类型而不是值。
-    
+
     // - 我们给 identity 添加了 "类型变量 T"。T 帮助我们捕获用于传入的类型 (比如:string)
     //   ，之后我们就可以使用这个类型。之后我们再次使用了 T 当做返回值类型。现在我们可以知道
     //   参数类型与返回值类型是相同的了。这允许我们跟踪函数里使用的类型的信息。
@@ -125,6 +118,7 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
     function identity<T>(arg: T): T {
         return arg;
     }
+
     // - 第 1 种使用“泛型函数”的方法，传入所有的参数，包含类型参数。
     let output = identity<string>("myString");
 
@@ -135,7 +129,7 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
 })();
 
 // - 7.枚举
-(function() {
+(function () {
 
     // - 运行时的枚举
     // 编译之后为：
@@ -148,9 +142,11 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
     enum E {
         X, Y, Z
     }
-    function f(obj: {X: number}) {
+
+    function f(obj: { X: number }) {
         return obj.X;
     }
+
     console.log("f(E):", f(E));  // f(E): 0
 
 
@@ -164,6 +160,7 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
     enum Enum {
         A
     }
+
     let a = Enum.A;
     let nameOfA = Enum[a];
 
@@ -182,10 +179,11 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
 
 
 // - 9.类型兼容性在: 类型兼容性用于确定一个类型是否能赋值给其他类型。
-(function() {
+(function () {
     interface Named {
         name: string;
     }
+
     let x: Named;
     let y = {name: 'Alice', location: 'Seattle'};
     // x = y;
@@ -195,11 +193,16 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
     // 类
     class Animal {
         feet: number;
-        constructor(name: string, numFeet: number) {}
+
+        constructor(name: string, numFeet: number) {
+        }
     }
+
     class Size {
         feet: number;
-        constructor(numFeet: number) {}
+
+        constructor(numFeet: number) {
+        }
     }
 
     let a: Animal;
@@ -211,36 +214,3 @@ console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
 
 
 
-// - 10.高级类型
-(function() {
-    // - 交叉类型 (Intersection Types): 交叉类型是将多个类型合并为一个类型。这让我们
-    //   可以把现有的多种类型叠加到一起成为一种类型，它包含了所需的所有类型的特性。
-    function extend<T, U>(first: T, second: U): T & U {
-        let result = <T & U>{};
-        for (let id in first) {
-            (<any>result)[id] = (<any>first)[id];
-        }
-        for (let id in second) {
-            if (!result.hasOwnProperty(id)) {
-                (<any>result)[id] = (<any>second)[id];
-            }
-        }
-        return result;
-    }
-    class Person {
-        constructor(public name: string){};
-    }
-    interface Loggable {
-        log(): void;
-    }
-    class ConsoleLogger implements Loggable {
-        log() {
-            // ...
-        }
-    }
-    let jim = extend(new Person('Jim'), new ConsoleLogger());
-    let n = jim.name;
-    console.log("n: ", n);
-    jim.log();
-
-})();

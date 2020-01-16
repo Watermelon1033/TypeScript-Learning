@@ -8,9 +8,10 @@ interface SquareConfig {
     color?: string;
     width?: number;
 }
-// - 接口 SquareConfig 为参数的类型注解； 
+
+// - 接口 SquareConfig 为参数的类型注解；
 // - {color: string; area: number} 为返回值的类型注解 
-function createSquare(config:SquareConfig): {color:string; area:number} {
+function createSquare(config: SquareConfig): { color: string; area: number } {
     let newSquare = {color: 'white', area: 100};
     // - 判断传入的 config 参数中是否存在 color 属性，如果存在，就把 color 属性赋值给
     //   newSquare.color
@@ -23,6 +24,7 @@ function createSquare(config:SquareConfig): {color:string; area:number} {
     }
     return newSquare;
 }
+
 let mySquare = createSquare({color: 'black'});
 console.log(mySquare);
 
@@ -36,17 +38,18 @@ console.log(mySquare);
 // - (PS: 我们都知道给构造函数添加的方法有原型上的方法(构造函数的实例可以继承，也可称为
 //   实例方法) 和给构造函数本身添加的 "静态方法", 由于 ES6 推出了构造函数的语法糖
 //   即"类"，所以给构造函数本身添加的方法也称为类的静态方法。)
-    interface ClockConstructor {
-        // - Clock 类内部的 constructor 存在于类的静态部分(即: 类的静态方法)，
-        //   所以不在接口的检查范围内。
-        new (hour: number, minute: number);
-    }
-    // - 这里会报错，因为当一个类实现一个接口时，只对其实例部分进行类型检查。constructor
-    //   存在于类的静态部分，所以不在检查的范围。
-    // class Clock implements ClockConstructor {
-    //     currentTime: Date;
-    //     constructor(h: number, m: number) {}
-    // }
+interface ClockConstructor {
+    // - Clock 类内部的 constructor 存在于类的静态部分(即: 类的静态方法)，
+    //   所以不在接口的检查范围内。
+    new(hour: number, minute: number);
+}
+
+// - 这里会报错，因为当一个类实现一个接口时，只对其实例部分进行类型检查。constructor
+//   存在于类的静态部分，所以不在检查的范围。
+// class Clock implements ClockConstructor {
+//     currentTime: Date;
+//     constructor(h: number, m: number) {}
+// }
 
 // - *(PS: 划重点)* 因此，我们应该直接操作类的静态部分。看下面的例子，我们定义了 
 //   2个接口，ClockConstructor 为构造函数所用, ClockInterface 为实例方法所用。
@@ -54,52 +57,65 @@ console.log(mySquare);
 
 // - ClockConstructor 接口为构造函数所用
 interface ClockConstructor {
-    new (hour: number, minute: number): ClockInterface;
+    new(hour: number, minute: number): ClockInterface;
 }
+
 // - ClockInterface 接口为实例方法所用
 interface ClockInterface {
     tick();
 }
-function createClock(ctor: ClockConstructor, hour: number, minute: number): 
+
+function createClock(ctor: ClockConstructor, hour: number, minute: number):
     ClockInterface {
     return new ctor(hour, minute);
 }
+
 class DigitalClock implements ClockInterface {
-    constructor(h: number, m:number) {}
+    constructor(h: number, m: number) {
+    }
+
     tick() {
         console.log('beep beep');
     }
 }
+
 // - analog ['ænəlɒɡ] --adj.模拟的，类比的。 --n.类比
 class AnalogClock implements ClockInterface {
-    construct(h: number, m: number) {}
+    construct(h: number, m: number) {
+    }
+
     tick() {
         console.log('tick tock');
     }
 }
+
 let digital = createClock(DigitalClock, 12, 17);
 let analog = createClock(AnalogClock, 7, 32);
 
 
-
 // - 接口继承类
-(function() {
+(function () {
     // - (1)
     class Control {
         private state: any;
     }
+
     // - (2)
     interface SelectableControl extends Control {
         // - 当前接口描述了一个 select() 方法，此方法没有返回值
         select(): void;
     }
+
     // - (3)
     class Button extends Control implements SelectableControl {
-        select() {}
+        select() {
+        }
     }
+
     // - (4)
     class TextBox extends Control {
-        select() {}
+        select() {
+        }
     }
 
 })();

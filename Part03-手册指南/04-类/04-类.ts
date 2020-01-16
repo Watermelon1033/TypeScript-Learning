@@ -1,20 +1,50 @@
-// - 手册指南 -- 类
+// ### 04--类
+
+(function () {
+    class Student {
+        fullName: string;
+
+        // 在构造函数的参数上使用 public 等同于创建了同名的成员变量。
+        constructor(public firstName, public middleInitial, public lastName) {
+            this.fullName = firstName + ' ' + middleInitial + ' ' + lastName;
+        }
+    }
+
+    // 这个示例不太明白，定义的
+    interface Person {
+        firstName: string;
+        lastName: string;
+    }
+
+    function greet(person: Person) {
+        return "Hello, " + person.firstName + " " + person.lastName;
+    }
+
+    let usr = new Student("Jean", ".M.", "Valjean");
+    console.log("greet: ", greet(usr)); // greet:  Hello, Jean Valjean
+
+})();
+
 
 // - 下面我们来看一个复杂的例子: 
 class Animal {
     name: string;
+
     constructor(theName: string) {
         this.name = theName;
     }
-    // - move() 方法接受一个类型为 number 的参数，并赋值默认值为 0 
+
+    // - move() 方法接受一个类型为 number 的参数，并赋值默认值为 0
     move(distanceInMeters: number = 0) {
         console.log(`${this.name} moved ${distanceInMeters}`);
     }
 }
+
 class Snake extends Animal {
     constructor(name: string) {
         super(name);
     }
+
     move(distanceInMeters = 5) {
         // - slither ['slɪðə] --v.(使)滑行；(使)滑动
         console.log("Slithering...");
@@ -22,10 +52,12 @@ class Snake extends Animal {
         super.move(distanceInMeters);
     }
 }
+
 class Horse extends Animal {
     constructor(name: string) {
         super(name);
     }
+
     move(distanceInMeters = 45) {
         // - gallop ['gæləp] --n.疾驰；飞奔。--v.飞驰；急速进行
         console.log("Galloping...");
@@ -42,39 +74,45 @@ tom.move(34);
 
 // - 存取器 (Accessor)
 let passcode = "secret passcode";
+
 class Employee {
     private _fullName: string;
     get fullName(): string {
         return this._fullName;
     }
+
     set fullName(newName: string) {
         if (passcode && passcode == "secret passcode") {
             this._fullName = newName;
-        } 
-        else {
+        } else {
             console.log("Error: Unauthorized update of employee!");
         }
     }
 }
+
 let employee = new Employee();
 employee.fullName = "Bob Smith";
 if (employee.fullName) {
-    console.log(employee.fullName);    
+    console.log(employee.fullName);
 }
 
 // - 静态属性
 class Grid {
     // - static 为给类添加的的静态属性
     static origin = {x: 0, y: 0};
-    constructor(public scale: number) {}
+
+    constructor(public scale: number) {
+    }
+
     // - 方法接受一个 point 的参数，参数为一个对象，包含 x 和 y 两个属性，每个属性
     //   都是 number 类型
-    calculateDistanceFromOrigin(point: {x: number; y: number}) {
+    calculateDistanceFromOrigin(point: { x: number; y: number }) {
         let xDist = (point.x - Grid.origin.x);
         let yDist = (point.y - Grid.origin.y);
         return Math.sqrt(xDist * xDist + yDist * yDist) / this.scale;
     }
 }
+
 let grid1 = new Grid(1.0);  // 1x scale
 let grid2 = new Grid(5.0);  // 5x scale
 console.log(grid1.calculateDistanceFromOrigin({x: 10, y: 10}));
@@ -83,23 +121,30 @@ console.log(grid2.calculateDistanceFromOrigin({x: 10, y: 10}));
 
 // - 抽象类
 abstract class Department {
-    constructor(public name: string) {}
-    printName(): void {
-        console.log("Department name:" + this.name);        
+    constructor(public name: string) {
     }
+
+    printName(): void {
+        console.log("Department name:" + this.name);
+    }
+
     abstract printMeeting(): void;  // - 必须在派生类中实现
 }
+
 class AccountingDepartment extends Department {
     constructor() {
         super("Account and Auditing");
     }
+
     printMeeting(): void {
         console.log("The Accounting Department meets each Monday at 10am.");
     }
+
     generateReports(): void {
         console.log("Generating accounting reports...");
     }
 }
+
 // - 允许创建一个对抽象类型的引用
 let department: Department;
 
@@ -122,15 +167,16 @@ department.printMeeting();
 class Greeter {
     static standardGreeting = "Hello, there";
     greeting: string;
+
     greet() {
         if (this.greeting) {
             return "Hello, " + this.greeting;
-        }
-        else {
+        } else {
             return Greeter.standardGreeting;
         }
     }
 }
+
 let greeter1: Greeter;
 greeter1 = new Greeter();
 console.log(greeter1.greet());
