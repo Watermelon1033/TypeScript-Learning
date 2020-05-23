@@ -1,4 +1,3 @@
-// - Q: 为什么接口后的花括号内属性之间是分号？
 interface SquareConfig {
     // - color 和 width 都为可选属性
     color?: string;
@@ -23,6 +22,54 @@ function createSquare(config: SquareConfig): { color: string; area: number } {
 
 let mySquare = createSquare({color: 'black'});
 console.log(mySquare);
+
+
+// - 3.6 可索引的类型
+(function() {
+    interface StringArray {
+        [index: number]: string;
+    }
+    let myArray: StringArray = ['Bob', 'Fred'];
+    console.log(myArray[0]);     // => "Bob"
+
+    // - 字符串索引 -- 约束对象
+    interface StringObject {
+        // - key 的类型为 string, 一般都代表是对象. 返回值也必须是 string
+        [index: string]: string;
+    }
+    let obj:StringObject = {name: 'ccc', gender:'male'};
+    console.log(obj['name']);
+
+
+    class Animal {
+        // - Animal 类有一个字符串类型的属性 name
+        name: string;
+    }
+    class Dog extends Animal {
+        breed: string
+    }
+    interface isOkay {
+        [index: number]: Dog;
+        // [val: string]: Animal;
+    }
+
+    let one = new Dog()
+    one.name = "TaiDi";
+    one.breed = "Unknown";
+
+    let two = new Dog();
+    two.name = "ErHa";
+    two.breed = "Unknown also";
+
+    let dogs = [one, two];
+
+    let okDogs:isOkay = dogs;
+    
+    console.log("狗的名字: " + okDogs[1].name + ". 品种: " + okDogs[1].breed);
+
+})();
+
+
 
 
 // + **区分: 类的"静态部分"与"实例部分"的不同**
