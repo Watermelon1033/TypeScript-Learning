@@ -5,19 +5,6 @@
 
 
 /**
- * ### 2.1.1 JavaScript 基本数据类型
- * - 6 种基本数据类型:
- *   + Undefined (未定义): Undefined类型，一个没有被赋值的变量会有一个默认值undefined.
- *   + Null (空值):        Null类型只有一个值: null。
- *   + Boolean (布尔值):   布尔类型表示一个逻辑实体，可以有两个值: true和false
- *   + Number (数字)
- *   + String (字符串)
- *   + Symbol (符号， ES6 中新增)
- * - 1 种复杂数据类型: Object
- */
-
-
-/**
  * ### 2.1.2 TypeScript 的基本类型
  * - 作为 JS 的超集，TS 支持与 JS 几乎相同的数据类型。
  */
@@ -73,7 +60,7 @@ function hello<T>(arg: T): T {
 }
 //   + 怎么使用泛型函数？和上面的类型断言一样有 2 中选择：
 //        - (1)、使用尖括号方式进行表达.  
-// 指定 T 是 string 类型，并将它作为参数传递给函数。
+//          指定 T 是 string 类型，并将它作为参数传递给函数。
 let outputHello = hello<string>("Hello TypeScript");
 //        - (2)、使用类型推断。（和正常的 js 调用一样）
 let output = hello("Hello TypeScript");
